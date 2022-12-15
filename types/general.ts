@@ -1,1 +1,1 @@
-export type IdWide = number | string | null;
+export type IdWide = number | string | null | undefined;

@@ -9,41 +9,39 @@ import Layout from "../components/Layout/Layout";
 const Home:FC = () => {
     return (
         <>
-            <Head>
-                {/*<title>Blog application</title>*/}
-            </Head>
+            <Head>{/*<title>Blog application</title>*/}</Head>
+
             <Layout>
-                <Title tag="h5" marginBottom={10}>Hello</Title>
-                <Typography>Page content</Typography>
-                <Typography variant={"h4"}
-                            sx={{alignSelf: 'flex-end', marginTop: '30px', marginBottom: '15px'}}>
-                    Blog
-                </Typography>
+                <div className={styles.description}>
+                    <Title tag="h5" marginBottom={10}>Hello</Title>
+                    <Typography>Page content</Typography>
+                </div>
+                <Title tag="h4" marginBottom={20}>Popular posts</Title>
                 <Image src="/cat.jpg"
                        alt="Blog"
                        width={500}
                        height={281}
                        placeholder="blur"
-                       style={{borderRadius: '15px'}}
+                       style={{borderRadius: '10px', marginBottom: '15px'}}
                        blurDataURL={`/_next/image?url=${'/cat.jpg'}&w=16&q=1`}
                 />
                 <br/>
-                <Image src="/cat.jpg"
+                <Image src="/kitten.jpg"
                        alt="Blog"
                        width={500}
                        height={281}
                        placeholder="blur"
-                       style={{borderRadius: '15px'}}
-                       blurDataURL={`/_next/image?url=${'/cat.jpg'}&w=16&q=1`}
+                       style={{borderRadius: '10px', marginBottom: '15px'}}
+                       blurDataURL={`/_next/image?url=${'/kitten.jpg'}&w=16&q=1`}
                 />
                 <br/>
-                <Image src="/cat.jpg"
+                <Image src="/dog.jpg"
                        alt="Blog"
                        width={500}
                        height={281}
                        placeholder="blur"
-                       style={{borderRadius: '15px'}}
-                       blurDataURL={`/_next/image?url=${'/cat.jpg'}&w=16&q=1`}
+                       style={{borderRadius: '10px'}}
+                       blurDataURL={`/_next/image?url=${'/dog.jpg'}&w=16&q=1`}
                 />
             </Layout>
         </>

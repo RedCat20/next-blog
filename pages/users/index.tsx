@@ -58,21 +58,21 @@ const Users:FC<Props> = ({users}) => {
     return (
         <>
             <Head>
-                <title>Posts list</title>
+                <title>Users list</title>
             </Head>
             <Layout>
                 <Title align={'center'} tag="h4">Users list</Title>
                 <div style={{display: 'grid',
                          alignItems: 'center',
                          gridTemplateColumns: '1fr 2fr',
-                         borderBottom: '1px solid #ccc',
-                         borderTop: '1px solid #ccc',
-                         borderLeft: '1px solid #ccc',
-                         borderRight: '1px solid #ccc',
-                         background: 'antiquewhite',
+                         borderBottom: '1px solid lightgreen',
+                         borderTop: '1px solid lightgreen',
+                         borderLeft: '1px solid lightgreen',
+                         borderRight: '1px solid lightgreen',
+                         background: 'mintcream',
 
                      }}>
-                    <div style={{borderRight: '1px solid #ccc', paddingTop: '15px', paddingBottom: '15px', fontWeight: 'bold', paddingLeft: '30px',
+                    <div style={{borderRight: '1px solid lightgreen', paddingTop: '15px', paddingBottom: '15px', fontWeight: 'bold', paddingLeft: '30px',
                         paddingRight: '30px',}}>Name</div>
                     <div style={{ paddingTop: '15px', paddingBottom: '15px', fontWeight: 'bold', paddingLeft: '30px',
                         paddingRight: '30px',}}>Email</div>
