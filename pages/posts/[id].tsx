@@ -5,11 +5,13 @@ import Title from "../../components/Title/Title";
 import Link from "next/link";
 import {Typography} from "@mui/material";
 import {GetStaticPaths, GetStaticProps} from "next";
+import {IPost} from "../../types/posts";
+import {ParsedUrlQuery} from "querystring";
 
 export const getStaticPaths: GetStaticPaths = async () => {
     try {
-        const response: any = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data: any = await response.json();
+        const response: Response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data: IPost[] = await response.json();
 
         const paths = data.map(({id}: { id: string | number, [key: string]: any }) => ({
             params: {id: id.toString()}
@@ -27,13 +29,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
     }
 }
 
-export const getStaticProps: GetStaticProps = async (context: any) => {
+export const getStaticProps: GetStaticProps = async (context) => {
     try {
-        const {id} = context.params;
-        const response: any = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
-        const data: any = await response.json();
+        const {id} = context.params as ParsedUrlQuery;
+        const response: Response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`);
+        const data: IPost = await response.json();
 
-        // const data = null;
         if (!data) {
             return {
                 notFound: true,
@@ -55,7 +56,7 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 }
 
 interface Props {
-    post: any;
+    post: IPost;
 }
 
 const Post:FC<Props> = ({post}) => {

@@ -1,3 +1,10 @@
+.header {
+  background: lightgreen;
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
 .links {
   display: flex;
   flex-direction: row;
@@ -16,4 +23,25 @@
 
 .active {
   color: #646465;
+}
+
+.mobile {
+  position: relative;
+  & > button {
+    position: relative;
+  }
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  right: 100%;
+  top: 70px;
+  background: lightgreen;
+  padding: 30px 60px;
+  z-index: 2;
+  & > a:not(:last-child) {
+    margin-bottom: 20px;
+  }
 }

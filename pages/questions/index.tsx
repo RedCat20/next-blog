@@ -1,4 +1,4 @@
-import {Container, Typography, Box} from '@mui/material';
+import {Typography} from '@mui/material';
 import {FC} from "react";
 import Title from "../../components/Title/Title";
 import Head from "next/head";
@@ -9,11 +9,9 @@ import {GetStaticProps} from "next";
 
 export const getStaticProps: GetStaticProps = async () => {
     try {
-        //const response: any = await fetch('http://localhost:3000/api/quest');
-        const response: any = await fetch(`${process.env.API_HOST}/quest/`);
-        const data: any = await response.json();
+        const response: Response = await fetch(`${process.env.API_HOST}/quest/`);
+        const data: IQuestion = await response.json();
 
-        // const data = null;
         if (!data) {
             return {
                 notFound: true,
@@ -38,7 +36,7 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 interface Props {
-    questions: IQuestion[] | any;
+    questions: IQuestion[];
 }
 
 const Questions:FC<Props> = ({questions}) => {

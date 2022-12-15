@@ -1,22 +1,19 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import {Container, Typography, Box} from '@mui/material';
-import styles from '../styles/Home.module.css'
-import {FC, useEffect, useState} from "react";
-import Title from "../../components/Title/Title";
+import {FC} from "react";
 import Layout from "../../components/Layout/Layout";
 import UserInfo from "../../components/UserInfo/UserInfo";
 import {GetServerSideProps} from "next";
+import {IUser} from "../../types/users";
+import {ParsedUrlQuery} from "querystring";
 
-export const getServerSideProps: GetServerSideProps = async (context: any) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         //console.log(context);
-        const { id } = context.params;
+        const { id } = context.params as ParsedUrlQuery;
 
-        const response: any = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
-        const data: any = await response.json();
+        const response: Response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+        const data: IUser = await response.json();
 
-        // const data = null;
         if (!data) {
             return {
                 notFound: true,
@@ -40,11 +37,7 @@ export const getServerSideProps: GetServerSideProps = async (context: any) => {
 }
 
 interface Props {
-    users: any[] | null | undefined;
-}
-
-interface Props {
-    user: any | null;
+    user: IUser;
 }
 
 const User:FC<Props> = ({user}) => {

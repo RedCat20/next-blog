@@ -1,13 +1,10 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import {Container, Typography, Box} from '@mui/material';
-import styles from '../styles/Home.module.css'
-import {FC, useEffect, useState} from "react";
+import {Typography} from '@mui/material';
+import {FC} from "react";
 import Title from "../../components/Title/Title";
-import Layout from "../../components/Layout/Layout";
+import {IUser} from "../../types/users";
 
 interface Props {
-    user: any | null;
+    user: IUser;
 }
 
 const User:FC<Props> = ({user}) => {
@@ -28,30 +25,6 @@ const User:FC<Props> = ({user}) => {
             </>
         )
     }
-
-    // const [users, setData] = useState<any[] | null>(null);
-    //
-    // const fetchData = async () => {
-    //     const response: any = await fetch('https://jsonplaceholder.typicode.com/users');
-    //     const data: any = await response.json();
-    //     setData(data);
-    // }
-    //
-    // useEffect(()=> {
-    //     fetchData().catch(err => console.log('Bad response', err));
-    // },[]);
-
-    // return (
-    //     <>
-    //         <Layout>
-    //             <Title align={'center'} tag="h4">User info</Title>
-    //             <div style={{ paddingLeft: '30px',
-    //                 paddingRight: '30px',borderRight: '1px solid #ccc', paddingTop: '15px', paddingBottom: '15px'}}>{name}</div>
-    //             <div style={{  paddingLeft: '30px',
-    //                 paddingRight: '30px',paddingTop: '15px', paddingBottom: '15px'}}>{email}</div>
-    //         </Layout>
-    //     </>
-    // )
 }
 
 export default User;

@@ -12,9 +12,16 @@ const Layout:FC<Props> = ({ children} ) => {
     return (
         <Container disableGutters sx={{background: 'white', }}>
             <Header/>
-            <Container sx={{p: '45px 30px', maxWidth: '100%', borderLeft: '1px solid #ccc', borderRight: '1px solid #ccc', minHeight: 'calc(100vh - 200px)'}}>
+            <Container
+                sx={{
+                    p: '45px 30px',
+                    maxWidth: '100%',
+                    minHeight: 'calc(100vh - 200px)',
+                    borderLeft: '1px solid #ccc',
+                    borderRight: '1px solid #ccc'
+            }}>
                 {children}
-            </Container>
+            </Container >
             <Footer/>
         </Container>
     )

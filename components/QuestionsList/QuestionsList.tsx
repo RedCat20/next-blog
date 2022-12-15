@@ -6,7 +6,7 @@ import Link from "next/link";
 import styles from './QuestionsList.module.scss';
 
 interface Props {
-    questions: IQuestion[] | any | null | undefined;
+    questions: IQuestion[];
 }
 
 const QuestionsList:FC<Props> = ({questions}) => {

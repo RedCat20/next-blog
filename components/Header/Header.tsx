@@ -1,9 +1,11 @@
-import {FC, ReactFragment, ReactNode} from "react";
-import {Box, Typography} from "@mui/material";
+import {MouseEvent, FC, ReactNode, useEffect, useState} from "react";
+import {AppBar, Box, IconButton, Toolbar, Typography} from "@mui/material";
 import Image from "next/image";
 import Link from 'next/link';
 import styles from './Header.module.scss';
 import {useRouter} from "next/router";
+import MenuIcon from '@mui/icons-material/Menu';
+import {useWindowResize} from "../hooks/useWindowResize";
 
 interface INavLink {
     id: number;
@@ -16,7 +18,7 @@ const navigation: Array<INavLink> = [
     { id: 2, title: 'Posts', path: '/posts' },
     { id: 3, title: 'Users', path: '/users' },
     { id: 4, title: 'Questions', path: '/questions' },
-    { id: 5, title: 'Feedback', path: '/feedback' },
+    // { id: 5, title: 'Feedback', path: '/feedback' },
 ]
 
 interface Props {
@@ -27,45 +29,61 @@ const Header:FC<Props> = ({ children} ) => {
 
     const {pathname} = useRouter();
 
-    return (
-        <Box sx={{
-            display: 'flex',
-            justifyContent: 'space-between',
-            alignItems: 'center',
-            bgcolor: 'lightgreen',
-            height: '100px',
-            p: '15px 30px',
-            borderLeft: '1px solid #ccc', borderRight: '1px solid #ccc',
-        }}>
-            {/*<Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />*/}
-            <Box>
-                <div className={styles.links}>
-                    <Image src="/learning.png" alt="Blog Logo" width={62} height={42} />
-                    <Typography variant={"h6"} sx={{fontWeight: 'bold', marginLeft: '5px', alignSelf: 'flex-end'}}>Blog</Typography>
-                </div>
-            </Box>
-            <Box>
-                <div className={styles.links}>
-                    {navigation.map((link: INavLink) => (
-                        <Link key={link.id} href={link.path}>
-                            <span className={`${styles.link} ${(link.path === pathname) ? styles.active : null}`}>{link.title}</span>
-                            {/*<Typography component={"div"} sx={{fontWeight: 'bold'}}>*/}
-                            {/*    {link.title}*/}
-                            {/*</Typography>*/}
-                        </Link>
-                    ))}
+    const size = useWindowResize();
 
-                    {/*<Link legacyBehavior href="/feedback">*/}
-                    {/*    <a>*/}
-                    {/*        <Typography component={"div"} sx={{fontWeight: 'bold'}}>*/}
-                    {/*            Feedback*/}
-                    {/*        </Typography>*/}
-                    {/*    </a>*/}
-                    {/*</Link>*/}
-                </div>
-            </Box>
-        </Box>
-    )
+    const [isMobileV, setIsMobileV] = useState<boolean>(false);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+
+    useEffect(() => {
+        setIsMobileV(prev => size.width < 575)
+    },[size]);
+
+    const menuBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
+        setIsOpen(prev => !prev);
+    }
+
+    return (
+        <div className={styles.header}>
+            <AppBar position="static" sx={{boxShadow: 'none'}} color={"transparent"}>
+                <Toolbar>
+                    <Box className={styles.links} sx={{flexGrow: 1}}>
+                        <Image src="/learning.png" alt="Blog Logo" width={62} height={42} />
+                        <Typography variant={"h6"} sx={{fontWeight: 'bold', marginLeft: '5px', alignSelf: 'flex-end'}}>Blog</Typography>
+                    </Box>
+                    <div className={styles.links}>
+
+                        {!isMobileV ?
+                            <>
+                            {navigation.map((link: INavLink) => (
+                                <Link key={link.id} href={link.path}>
+                                    <span className={`${styles.link} ${(link.path === pathname) ? styles.active : null}`}>{link.title}</span>
+                                </Link>
+                            ))}
+                            </>
+                            :
+                            <div className={styles.mobile}>
+                                <IconButton color="inherit" onClick={menuBtnClick} >
+                                    <MenuIcon />
+                                </IconButton>
+                                {isOpen &&
+                                    <>
+                                        <div className={styles.column}>
+                                            {navigation.map((link: INavLink) => (
+                                                <Link key={link.id} href={link.path}>
+                                                    <span className={`${styles.link} ${(link.path === pathname) ? styles.active : null}`}>{link.title}</span>
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    </>
+                                }
+                            </div>
+                        }
+
+                    </div>
+                </Toolbar>
+            </AppBar>
+        </div>
+    );
 }
 
 export default Header;

@@ -2,16 +2,15 @@ import {FC} from "react";
 import Head from "next/head";
 import Layout from "../../components/Layout/Layout";
 import Title from "../../components/Title/Title";
-import Link from "next/link";
-import {Typography} from "@mui/material";
 import {GetStaticPaths, GetStaticProps} from "next";
+import {IQuestion} from "../../types/questions";
+import {ParsedUrlQuery} from "querystring";
 
 export const getStaticPaths: GetStaticPaths = async ( ) => {
     try {
-        const response: any = await fetch(`${process.env.API_HOST}/quest/`);
+        const response: Response = await fetch(`${process.env.API_HOST}/quest/`);
 
-        const data: any = await response.json();
-        console.log('data: ', data)
+        const data: IQuestion[] = await response.json();
 
         const paths = data.map(({id} : {id: string | number, [key: string]: any}) => ({
             params: {id: id.toString()}
@@ -31,24 +30,23 @@ export const getStaticPaths: GetStaticPaths = async ( ) => {
     }
 }
 
-export const getStaticProps: GetStaticProps = async (context: any) => {
+export const getStaticProps: GetStaticProps = async (context) => {
     try {
-        const {id} = context.params;
-        const response: any = await fetch(`${process.env.API_HOST}/quest/${id.toString()}`);
-        const data: any = await response.json();
+        const {id} = context.params as ParsedUrlQuery;
+        const response: Response = await fetch(`${process.env.API_HOST}/quest/${id?.toString()}`);
+        const data: IQuestion = await response.json();
 
-       // const data = null;
-       if (!data) {
+        if (!data) {
            return {
                notFound: true,
            }
-       }
+        }
 
-       return {
+        return {
             props: {
                question: data
            }
-       }
+        }
     }
     catch(e) {
         console.log('e: ', e);
@@ -61,11 +59,10 @@ export const getStaticProps: GetStaticProps = async (context: any) => {
 }
 
 interface Props {
-    question: any;
+    question: IQuestion;
 }
 
 const Question:FC<Props> = ({question}) => {
-    console.log('question: ', question)
 
     if (!question?.title) {
         return(
@@ -86,7 +83,7 @@ const Question:FC<Props> = ({question}) => {
                 <title>Posts list</title>
             </Head>
             <Layout>
-                <Title align={'left'} tag="h4">{question.title}</Title>
+                <Title align={'left'} tag="h5">{question.title}</Title>
                 {question.answer}
             </Layout>
         </>

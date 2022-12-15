@@ -1,8 +1,8 @@
-import {Button, Grid, Typography, Container} from "@mui/material";
+import {Button, Grid, Typography} from "@mui/material";
 import Link from "next/link";
 import {FC} from "react";
 
-import styles from './Posts.module.scss';
+import styles from './PostsList.module.scss';
 import {IPost} from "../../types/posts";
 
 interface Props {
@@ -15,12 +15,8 @@ const PostsList:FC<Props> = ({posts}) => {
         return <div>No posts</div>
     }
 
-
     return (
-
-    // <Grid container columns={{ xs: 6, md: 6 }} spacing={2} sx={{background: '#ccc', margin: '0 auto'}}>
     <Grid container spacing={'2px'} columns={{ xs: 2, sm: 6, lg: 12}}>
-
         {Array.isArray(posts) && posts.map((post: IPost) => (
 
             <Grid item key={post.id} xs={3}>
@@ -33,13 +29,12 @@ const PostsList:FC<Props> = ({posts}) => {
                         {post.title}
                     </div>
 
-                    <Link href={`/posts/${post.id}`} style={{marginBottom: '20px'}}>
+                    <Link href={`/posts/${post.id}`}>
                         <Button variant="outlined" color="success">Show more</Button>
                     </Link>
                 </div>
             </Grid>
         ))}
-
     </Grid>
     )
 }

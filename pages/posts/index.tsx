@@ -1,21 +1,18 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import {Container, Typography, Box, Button, Grid} from '@mui/material';
-import styles from '../styles/Home.module.css'
 import {FC} from "react";
 import Title from "../../components/Title/Title";
 import Layout from "../../components/Layout/Layout";
-import Link from "next/link";
 import PostsList from "../../components/PostsList/PostsList";
 import {IPost} from "../../types/posts";
 import {GetStaticProps} from "next";
+import Search from "../../components/Search/Search";
+import CustomLink from "../../components/CustomLink/CustomLink";
 
 export const getStaticProps: GetStaticProps = async () => {
     try {
-        const response: any = await fetch('https://jsonplaceholder.typicode.com/posts');
-        const data: any = await response.json();
+        const response: Response = await fetch('https://jsonplaceholder.typicode.com/posts');
+        const data: IPost[] = await response.json();
 
-        // const data = null;
         if (!data) {
             return {
                 notFound: true,
@@ -39,10 +36,15 @@ export const getStaticProps: GetStaticProps = async () => {
 }
 
 interface Props {
-    posts: IPost[] | null;
+    posts: IPost[];
 }
 
 const Posts:FC<Props> = ({posts}) => {
+
+    const searchPost = (searchValue: string) => {
+        console.log('searchValue', searchValue);
+    }
+
     return (
         <>
             <Head>
@@ -51,17 +53,19 @@ const Posts:FC<Props> = ({posts}) => {
             <Layout>
                 <Title align={'center'} tag="h4">Posts list</Title>
 
-                <Typography variant="subtitle1" sx={{p: '20px 0', color: '#38383b'}}>
-                    <Link href={'/posts/info'}>
-                        <Typography sx={{textDecoration: 'underline', textAlign: 'right', marginBottom: '20px', marginLeft: 'auto', marginRight: '0', display: 'inline'}}>
-                            Main information
-                        </Typography>
-                    </Link>
-                </Typography>
+                <CustomLink title="Main information"
+                            path="/posts/info"
+                            variant="subtitle1"
+                            styles={{
+                                textDecoration: 'underline',
+                                display: 'inline',
+                                color: '#38383b'
+                            }}
+                            marginBottom={10} textAlign={'right'}
+                />
 
-
+                <Search searchLabel="Search post" onChangeSearchStr={searchPost} marginBottom={30}/>
                 <PostsList posts={posts}/>
-
 
             </Layout>
         </>

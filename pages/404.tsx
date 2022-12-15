@@ -1,4 +1,4 @@
-import {Container, Typography, Box} from '@mui/material';
+import {Typography} from '@mui/material';
 import {FC, useEffect} from "react";
 import {useRouter} from "next/router";
 import Title from "../components/Title/Title";
