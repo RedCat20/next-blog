@@ -1,0 +1,8 @@
+.listItem {
+  margin-bottom: 15px;
+  color: black;
+  &:hover {
+    color: green;
+    transition: all ease-in 0.35s;
+  }
+}

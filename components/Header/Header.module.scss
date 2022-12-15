@@ -1,0 +1,19 @@
+.links {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  & > a {
+    &:not(:last-child) {
+      margin-right: 30px;
+    }
+  }
+}
+
+.link {
+  color: black;
+  font-weight: bold;
+}
+
+.active {
+  color: #646465;
+}
