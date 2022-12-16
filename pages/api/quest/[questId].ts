@@ -13,14 +13,13 @@ export default function handler(
     req: NextApiRequest,
     res: NextApiResponse<IQuestion>
 ) {
-    console.log('method', req.method)
+    //console.log('method', req.method)
     const questId = req.query.questId;
-    console.log('questId', questId)
+    //console.log('questId', questId)
     const question = getQuestionById(questId);
     // res.end(`Post: ${pid}`)
     if (req.method === 'GET') {
         //res.status(200).json(questions[0])
-
         res.status(200).json(<IQuestion>question)
     }
 }
