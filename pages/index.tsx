@@ -9,7 +9,7 @@ import {GetStaticProps} from "next";
 import {IUser} from "../types/users";
 import {IPost} from "../types/posts";
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getServerSideProps: GetStaticProps = async () => {
     try {
         const user: Response = await fetch(`https://jsonplaceholder.typicode.com/users/${Math.ceil(Math.random() * 10)}`);
         const userData: IUser = await user.json();
