@@ -1,8 +1,8 @@
-import {FC, useEffect, useState} from "react";
+import {FC, useEffect, useMemo, useState} from "react";
 import PostsList from "../../components/PostsList/PostsList";
 import {IPost} from "../../types/posts";
 import Search from "../../components/Search/Search";
-import {Box, Button, Container, Grid, Typography} from "@mui/material";
+import {Button, Container, Typography} from "@mui/material";
 import styles from "./PostsPageComponent.module.scss";
 
 interface Props {
@@ -11,6 +11,8 @@ interface Props {
 
 const PostsPageComponent:FC<Props> = ({posts}) => {
     const [searchedPosts, setSearchedPosts] = useState<IPost[] | []>([]);
+    const [collapsedPosts, setCollapsedPosts] = useState<IPost[] | []>([]);
+
     const [searchStr, setSearchedStr] = useState<IPost[] | []>([]);
     const [showAll, setShowAll] = useState(false);
 
@@ -19,8 +21,13 @@ const PostsPageComponent:FC<Props> = ({posts}) => {
             const title = post.title;
             return title.includes(searchValue);
         })
+        if (searchedData?.length > 0) {
+            setSearchedPosts(searchedData);
+        } else {
+            setSearchedPosts([]);
+        }
+
         setSearchedStr(searchStr);
-        setSearchedPosts(searchedData);
     }
 
     const getList = () => {
@@ -29,19 +36,31 @@ const PostsPageComponent:FC<Props> = ({posts}) => {
         let list = [];
 
         if (showAll) {
-            list = posts;
+            list = searchedPosts;
         }
-        else {
-            list = posts.slice(0, 3);
+        else if (!showAll) {
+            list = searchedPosts.slice(0, 3);
+        } else {
+            list = posts;
         }
 
         return list;
     }
 
+
     useEffect(() => {
-        let list = getList();
-        setSearchedPosts( list );
-    },[posts,showAll]);
+        setCollapsedPosts(searchedPosts)
+    },[searchedPosts]);
+
+    useEffect(() => {
+        let list = getList( );
+        setCollapsedPosts( list );
+    },[showAll]);
+
+    useMemo(() => {
+        setCollapsedPosts(posts);
+        setSearchedPosts(posts);
+    },[posts]);
 
     return (
         <>
@@ -51,14 +70,15 @@ const PostsPageComponent:FC<Props> = ({posts}) => {
                 {searchedPosts.length} posts
             </Typography>
 
-            <PostsList posts={(searchedPosts?.length > 0 && searchStr) ? searchedPosts : posts}/>
+            <PostsList posts={(collapsedPosts?.length > 0 && searchStr) ? collapsedPosts : posts}/>
 
             <Container>
                 <Button style={{margin: "30px 0"}}
                         size={"medium"}
                         variant="contained"
                         color="primary"
-                        onClick={() => setShowAll(!showAll) }>
+                        onClick={() => setShowAll(prev => !prev) }
+                >
                     Show all / Collapse
                 </Button>
             </Container>
