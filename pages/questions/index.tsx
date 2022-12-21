@@ -9,7 +9,7 @@ import {GetStaticProps} from "next";
 
 export const getStaticProps: GetStaticProps = async () => {
     try {
-        const response: Response = await fetch(`${process.env.API_HOST}/quest/`);
+        const response: Response = await fetch(`${process.env.API_HOST || 'http://localhost:3000/api'}/quest/`);
         const data: IQuestion = await response.json();
 
         if (!data) {
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
             props: {
                 questions: [],
             },
-            fallback: false
+           // fallback: false
         }
     }
 }

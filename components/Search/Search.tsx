@@ -17,11 +17,13 @@ const Search:FC<Props> = ({ searchStr= '',
 
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setValue(value)
+
+        setValue(value);
+        onChangeSearchStr(value);
     }
 
     return (
-        <TextField color="success" type="search" value={value} onChange={onChange} label={searchLabel} variant="standard" fullWidth sx={{mb: `${marginBottom ?? 0}px`}}/>
+        <TextField color="success" type="search" value={value} onChange={(e: ChangeEvent<HTMLInputElement>) => onChange(e)} label={searchLabel} variant="standard" fullWidth sx={{mb: `${marginBottom ?? 0}px`}}/>
     );
 };
 

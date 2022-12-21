@@ -8,7 +8,6 @@ import {ParsedUrlQuery} from "querystring";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
-        //console.log(context);
         const { id } = context.params as ParsedUrlQuery;
 
         const response: Response = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);

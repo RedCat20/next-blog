@@ -2,11 +2,10 @@ import Head from 'next/head'
 import {FC} from "react";
 import Title from "../../components/Title/Title";
 import Layout from "../../components/Layout/Layout";
-import PostsList from "../../components/PostsList/PostsList";
 import {IPost} from "../../types/posts";
 import {GetStaticProps} from "next";
-import Search from "../../components/Search/Search";
 import CustomLink from "../../components/CustomLink/CustomLink";
+import PostsPageComponent from "../../components/PostsPageComponent/PostsPageComponent";
 
 export const getStaticProps: GetStaticProps = async () => {
     try {
@@ -41,10 +40,6 @@ interface Props {
 
 const Posts:FC<Props> = ({posts}) => {
 
-    const searchPost = (searchValue: string) => {
-        console.log('searchValue', searchValue);
-    }
-
     return (
         <>
             <Head>
@@ -64,9 +59,7 @@ const Posts:FC<Props> = ({posts}) => {
                             marginBottom={10} textAlign={'right'}
                 />
 
-                <Search searchLabel="Search post" onChangeSearchStr={searchPost} marginBottom={30}/>
-                <PostsList posts={posts}/>
-
+                <PostsPageComponent posts={posts} />
             </Layout>
         </>
     )
