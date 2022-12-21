@@ -1,3 +1,19 @@
+# Demo
+
+https://next-blog-bv6n.vercel.app/
+
+You have to run an application with 
+
+npm run dev 
+
+In local environment
+
+Or view actual version with a build in the vercel hosting demo site
+
+The local build with the next command npm run start is not working now, because my next.js back and front-end part can not be on one localhost or I can not fix it.
+
+## Main info
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
